@@ -13,7 +13,7 @@ const contactSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // automatically adds `createdAt` and `updatedAt` fields
+    timestamps: true,
   }
 );
 
