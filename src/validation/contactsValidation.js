@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { contactTypeList } from '../constants/contacts.js';
+import { contactList } from '../constants/contacts.js';
 
 export const contactAddSchema = Joi.object({
   name: Joi.string().required().min(3).max(20),
@@ -9,7 +9,7 @@ export const contactAddSchema = Joi.object({
   isFavourite: Joi.boolean(),
   contactType: Joi.string()
     .required()
-    .valid(...contactTypeList)
+    .valid(...contactList)
     .default('personal')
     .min(3)
     .max(20),
@@ -21,7 +21,7 @@ export const contactPatchSchema = Joi.object({
   email: Joi.string().min(3).max(20),
   isFavourite: Joi.boolean(),
   contactType: Joi.string()
-    .valid(...contactTypeList)
+    .valid(...contactList)
     .default('personal')
     .min(3)
     .max(20),
