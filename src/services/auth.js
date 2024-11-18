@@ -7,7 +7,7 @@ import handlebars from 'handlebars';
 import jwt from 'jsonwebtoken';
 import SessionCollection from '../db/Session.js';
 import UserCollection from '../db/User.js';
-import { SMTP, TEMPLATES_DIR } from '../index.js';
+import { SMTP, TEMPLATES_DIR } from '../constants/index.js';
 import { env } from '../utils/env.js';
 
 import { sendEmail } from '../utils/sendEmail.js';
