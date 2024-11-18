@@ -1,13 +1,17 @@
-import ContactModel from '../models/contact.js';
+import ContactCollection from '../db/Contacts.js';
 
-export const getAllContacts = () => ContactModel.find();
-
-export const getContactById = (id) => ContactModel.findById(id);
-
-export const createContact = (payload) => ContactModel.create(payload);
+export const getAllContacts = async () => {
+  const contacts = await ContactCollection.find();
+  return contacts;
+};
+export const getContactById = async (id) => {
+  const contacts = await ContactCollection.findById(id);
+  return contacts;
+};
+export const createContact = (payload) => ContactCollection.create(payload);
 
 export const updateContact = async (filter, data, options = {}) => {
-  const rawResult = await ContactModel.findOneAndUpdate(filter, data, {
+  const rawResult = await ContactCollection.findOneAndUpdate(filter, data, {
     new: true,
     includeResultMetadata: true,
     ...options,
@@ -21,4 +25,5 @@ export const updateContact = async (filter, data, options = {}) => {
   };
 };
 
-export const deleteContact = (filter) => ContactModel.findOneAndDelete(filter);
+export const deleteContact = (filter) =>
+  ContactCollection.findOneAndDelete(filter);

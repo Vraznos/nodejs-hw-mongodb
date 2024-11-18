@@ -1,24 +1,29 @@
 import { Router } from 'express';
+import * as ContactControllers from '../controllers/contacts.js';
+import ctrlWrapper from '../utils/ctrlWrapper.js';
 
-import {
-  getContactsByIdController,
-  getContactsController,
-  createContactController,
-  updateContactContoller,
-  deleteContactController,
-} from '../controllers/contactsController.js';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+const contactsRouter = Router();
 
-const router = Router();
+contactsRouter.get(
+  '/',
+  ctrlWrapper(ContactControllers.getAllContactsController),
+);
+contactsRouter.get(
+  '/:id',
+  ctrlWrapper(ContactControllers.getContactByIdController),
+);
+contactsRouter.post('/', ctrlWrapper(ContactControllers.addContactController));
+contactsRouter.put(
+  '/:id',
+  ctrlWrapper(ContactControllers.upsertContactController),
+);
+contactsRouter.patch(
+  '/:id',
+  ctrlWrapper(ContactControllers.patchContactController),
+);
+contactsRouter.delete(
+  '/:id',
+  ctrlWrapper(ContactControllers.deleteContactController),
+);
 
-router.get('/contacts', ctrlWrapper(getContactsController));
-
-router.get('/contacts/:contactID', ctrlWrapper(getContactsByIdController));
-
-router.post('/contacts', ctrlWrapper(createContactController));
-
-router.patch('/contacts/:contactID', ctrlWrapper(updateContactContoller));
-
-router.delete('/contacts/:contactID', ctrlWrapper(deleteContactController));
-
-export default router;
+export default contactsRouter;
