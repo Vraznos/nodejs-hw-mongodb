@@ -27,55 +27,43 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
-  try {
-    const data = await contactServices.createContact(req.body);
-    res.status(201).json({
-      status: 201,
-      message: 'Contact added successfully',
-      data,
-    });
-  } catch (error) {
-    throw createHttpError(500, error.message);
-  }
+  const data = await contactServices.createContact(req.body);
+  res.status(201).json({
+    status: 201,
+    message: 'Contact added successfully',
+    data,
+  });
 };
 
 export const upsertContactController = async (req, res) => {
   const { id } = req.params;
-  try {
-    const { isNew, data } = await contactServices.updateContact(
-      { _id: id },
-      req.body,
-      { upsert: true },
-    );
-    const status = isNew ? 201 : 200;
+  const { isNew, data } = await contactServices.updateContact(
+    { _id: id },
+    req.body,
+    { upsert: true },
+  );
+  const status = isNew ? 201 : 200;
 
-    res.status(status).json({
-      status,
-      message: 'Contact upserted successfully',
-      data,
-    });
-  } catch (error) {
-    throw createHttpError(500, error.message);
-  }
+  res.status(status).json({
+    status,
+    message: 'Contact upserted successfully',
+    data,
+  });
 };
 
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
-  try {
-    const result = await contactServices.updateContact({ _id: id }, req.body);
+  const result = await contactServices.updateContact({ _id: id }, req.body);
 
-    if (!result) {
-      throw createHttpError(404, `Contact with id=${id} not found`);
-    }
-
-    res.json({
-      status: 200,
-      message: 'Contact patched successfully',
-      data: result.data,
-    });
-  } catch (error) {
-    throw createHttpError(500, error.message);
+  if (!result) {
+    throw createHttpError(404, `Contact with id=${id} not found`);
   }
+
+  res.json({
+    status: 200,
+    message: 'Contact patched successfully',
+    data: result.data,
+  });
 };
 
 export const deleteContactController = async (req, res) => {
